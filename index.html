@@ -42,13 +42,6 @@
             return degree*(Math.PI/180); 
           }
 
-        function addWall(x, y)
-        {
-          var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1), wallMat);
-          cube.position.set(x,0,y);
-          scene.add(cube);
-        }
-
         var game = document.getElementById("game");
 
         var scene = new THREE.Scene();
@@ -71,42 +64,44 @@
         var playerMat = new THREE.MeshBasicMaterial({color: 0x004400});
 
         var wall = function(x, y, z)
-          {
+        {
           this.geometry = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), wallMat);
           this.geometry.position.set(x, y, z);
           scene.add(this.geometry);
-          }
-        var player = function(x, y, z)
-          {
+        }
+        var mob = function(x, y, z)
+        {
           this.geometry = new THREE.Mesh( new THREE.PlaneGeometry(1,1),playerMat);
-          three.geometry.position.set(x, y, z);
+          this.geometry.position.set(x, y, z);
           scene.add(this.geometry);
-          }
+        }
 
         var level = [[1,1,1,1,1],
           [1,0,0,0,1],
           [1,0,0,0,0],
           [1,0,0,0,1],
           [1,1,1,1,1]]
-          var levelGeometry = [];
+        var levelGeometry = [];
 
         for(var y = 0; y < level.length; y++)
-          {
-            for(var x = 0; x < level[0].length; x++)
-              {
-                  if( level[y][x] == 1 )
-                    {
-                      levelGeometry.push(wall(x, y, 0));
-                    }
-              }
-          }
+        {
+          for(var x = 0; x < level[0].length; x++)
+            {
+                if( level[y][x] == 1 )
+                {
+                  levelGeometry.push(new wall(x, y, 0));
+                }
+            }
+        }
+          
+        var player = new mob(0,0,0.1);
 
         var render = function () {
         requestAnimationFrame(render);
         handleInput();
         animate();
         renderer.render(scene, camera);
-        };
+        }
 
         function handleInput()
         {
@@ -117,7 +112,6 @@
         {
           //ANIMATION SHIT GOES HERE
         }
-        
 
         render();
     </script>
