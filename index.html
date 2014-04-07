@@ -26,21 +26,21 @@
           window.addEventListener( 'resize', onWindowResize, false );
 
           function onWindowResize()
-        {
-          camera.left = ((game.offsetWidth/game.offsetHeight)*SCALE)/-2;
-          camera.right = ((game.offsetWidth/game.offsetHeight)*SCALE)/2;
-          camera.top = SCALE / 2;
-          camera.bottom = SCALE / -2;
+            {
+            camera.left = ((game.offsetWidth/game.offsetHeight)*SCALE)/-2;
+            camera.right = ((game.offsetWidth/game.offsetHeight)*SCALE)/2;
+            camera.top = SCALE / 2;
+            camera.bottom = SCALE / -2;
 
-          camera.updateProjectionMatrix();
+            camera.updateProjectionMatrix();
 
-          renderer.setSize(game.offsetWidth, game.offsetHeight);
-        }
+            renderer.setSize(game.offsetWidth, game.offsetHeight);
+          }
 
           function de2ra(degree)
-        { 
-          return degree*(Math.PI/180); 
-        }
+          { 
+            return degree*(Math.PI/180); 
+          }
 
         function addWall(x, y)
         {
@@ -68,11 +68,18 @@
         game.appendChild(renderer.domElement);
 
         var wallMat = new THREE.MeshBasicMaterial({color: 0x770000});
+        var playerMat = new THREE.MeshBasicMaterial({color: 0x004400});
 
         var wall = function(x, y, z)
           {
           this.geometry = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), wallMat);
           this.geometry.position.set(x, y, z);
+          scene.add(this.geometry);
+          }
+        var player = function(x, y, z)
+          {
+          this.geometry = new THREE.Mesh( new THREE.PlaneGeometry(1,1),playerMat);
+          three.geometry.position.set(x, y, z);
           scene.add(this.geometry);
           }
 
@@ -110,6 +117,7 @@
         {
           //ANIMATION SHIT GOES HERE
         }
+        
 
         render();
     </script>
