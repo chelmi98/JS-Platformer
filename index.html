@@ -69,11 +69,13 @@
           scene.add(this.geometry);
         }
         
-        var mob = function(x, y, z)
+        var mob = function(x, y, z, width, height)
         {
-          this.geometry = new THREE.Mesh( new THREE.PlaneGeometry(1,1),playerMat);
-          this.geometry.position.set(x, y, z);
+          this.geometry = new THREE.Mesh( new THREE.PlaneGeometry(width,height),playerMat);
+          this.geometry.position.set(x+width/2, y+height/2, z);
           scene.add(this.geometry);
+          this.x = x;
+          this.y = y;
         }
 
         var level = 
@@ -96,7 +98,7 @@
             }
         }
           
-        var player = new mob(0,0,0.1);
+        var player = new mob(0,0,0.1,2,3);
 
         var render = function () {
         requestAnimationFrame(render);
