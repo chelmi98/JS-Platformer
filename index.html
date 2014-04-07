@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title>Platformer</title>
+    <style>
+      body 
+      { 
+       margin: 0px; 
+      }
+     #game
+       {
+         overflow: hidden;
+         height: 100%;
+       }
+    </style>
+    </head>
+    <body>
+        <div id = "game"></div>
+        <script src='./THREE/three.min.js'></script>
+        <script src='./THREE/THREEx.KeyboardState.js'></script>
+        <script>
+          var LOOKSPEED = 0.03;
+          var MOVESPEED = 0.05;
+          var PLAYERSIZE = 0.2;
+          var SCALE = 5;
+
+          window.addEventListener( 'resize', onWindowResize, false );
+
+          function onWindowResize()
+        {
+          camera.left = ((game.offsetWidth/game.offsetHeight)*SCALE)/-2;
+          camera.right = ((game.offsetWidth/game.offsetHeight)*SCALE)/2;
+          camera.top = SCALE / 2;
+          camera.bottom = SCALE / -2;
+
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(game.offsetWidth, game.offsetHeight);
+        }
+
+          function de2ra(degree)
+        { 
+          return degree*(Math.PI/180); 
+        }
+
+        function addWall(x, y)
+        {
+          var cube = new THREE.Mesh(new THREE.CubeGeometry(1, 1, 1), wallMat);
+          cube.position.set(x,0,y);
+          scene.add(cube);
+        }
+
+        var game = document.getElementById("game");
+
+        var scene = new THREE.Scene();
+
+        camera = new THREE.OrthographicCamera( 
+        ((game.offsetWidth/game.offsetHeight)*SCALE)/-2,
+        ((game.offsetWidth/game.offsetHeight)*SCALE)/ 2,
+        SCALE / 2,
+        SCALE / -2,
+        -500, 1000 );
+        camera.position.set(2, 2, 0);
+
+        var keyboard = new THREEx.KeyboardState();
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(game.offsetWidth, game.offsetHeight);
+        game.appendChild(renderer.domElement);
+
+        var wallMat = new THREE.MeshBasicMaterial({color: 0x770000});
+
+        var wall = function(x, y, z)
+          {
+          this.geometry = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), wallMat);
+          this.geometry.position.set(x, y, z);
+          scene.add(this.geometry);
+          }
+
+        var level = [[1,1,1,1,1],
+          [1,0,0,0,1],
+          [1,0,0,0,0],
+          [1,0,0,0,1],
+          [1,1,1,1,1]]
+          var levelGeometry = [];
+
+        for(var y = 0; y < level.length; y++)
+          {
+            for(var x = 0; x < level[0].length; x++)
+              {
+                  if( level[y][x] == 1 )
+                    {
+                      levelGeometry.push(wall(x, y, 0));
+                    }
+              }
+          }
+
+        var render = function () {
+        requestAnimationFrame(render);
+        handleInput();
+        animate();
+        renderer.render(scene, camera);
+        };
+
+        function handleInput()
+        {
+          //INPUT SHIT GOES HERE
+        }
+
+        function animate()
+        {
+          //ANIMATION SHIT GOES HERE
+        }
+
+        render();
+    </script>
+  </body>
+</html>
